@@ -1,0 +1,5 @@
+env/
+Controllers/__pycache__/
+Models/.vs/
+Models/__pycache__/
+Views/__pycache__/
