@@ -126,20 +126,21 @@ class Rank:
             rangs.append(rang)
         return rangs
 
+    global rangs
     rangs = init_classement()
     #print(rangs)
 
     def create_classement(rangs):
         """création du classement en mémoire"""
-        rangs = Classement(rangs)
-        return rangs
+        obj_rangs = Classement(rangs)
+        return obj_rangs
     
-    rangs = create_classement(rangs)
-    print(rangs)
+    obj_rangs = create_classement(rangs)
+    print(obj_rangs)
 
 class Build:
     """constuit le tournoi"""
-    def __init__(self, list_joueur, nombre_tour = 4):
+    def __init__(self):
         pass
     
     def edit_round():
@@ -150,49 +151,70 @@ class Build:
         return tours
     tours = edit_round()
 
-    def create_round(tours):
-        liste = Rank.init_classement()
-        for joueur in liste:
-            pairs = []
-            tirages = []
-            while len(liste):
-                i = 0
-                if len(liste) > 4:
-                    j = 4
-                elif len(liste) == 4:
-                    j = 2
-                elif len(liste) == 2:
-                    j = 1
-                else:
-                    pass    
-                pair = List_match(liste[i], liste[j])
-                j -= 1
+    def create_round(rangs, tours):
+        liste = rangs
+        pairs = []
+        tirages = []
+        while liste:
+            if len(liste) == 8:
+                i = liste[0]
+                j = liste[4]
+                pair = List_match(i, j)
                 pairs.append(pair)
-                couleurs = ['blanc', 'noir']
-                couleur = random.choice(couleurs)
-                if couleur == 'blanc':
-                    tirage = Tirage(couleurs[0], couleurs[1])
-                    tirages.append(tirage)
-                elif couleur == 'noir':
-                    tirage = Tirage(couleurs[1], couleurs[0])
-                    tirages.append(tirage)
-                else:
-                    pass
+                liste.pop(0)
+                liste.pop(3)
                 
-                liste = liste[2:]  
-            #print(pairs)
-            #print(tirages)
+            elif len(liste) == 6:
+                i = liste[0]
+                j = liste[3]
+                pair = List_match(i, j)
+                pairs.append(pair)
+                liste.pop(0)
+                liste.pop(2)     
+
+            elif len(liste) == 4:
+                i = liste[0]
+                j = liste[2]
+                pair = List_match(i, j)
+                pairs.append(pair)
+                liste.pop(0)
+                liste.pop(1)
+
+            elif len(liste) == 2:
+                i = liste[0]
+                j = liste[1]
+                pair = List_match(i, j)
+                pairs.append(pair)
+                liste.pop(0)
+                liste.pop(0)
+                
+            else:
+                pass
             
-            nom_tour = "Round " + str(tours[0])
-            begin_time = datetime.datetime.now()
-            end_time = datetime.datetime.now()
-            tour = Tour(nom_tour, begin_time, end_time)
-            #print(nom_tour, begin_time, end_time)
-            return  pairs, tirages, tour
-            pass
+            couleurs = ['blanc', 'noir']
+            couleur = random.choice(couleurs)
+            if couleur == 'blanc':
+                tirage = Tirage(couleurs[0], couleurs[1])
+                tirages.append(tirage)
+            elif couleur == 'noir':
+                tirage = Tirage(couleurs[1], couleurs[0])
+                tirages.append(tirage)
+            else:
+                pass
+             
+        #print(pairs)
+        #print(tirages)
+        
+        nom_tour = "Round " + str(tours[0])
+        begin_time = datetime.datetime.now()
+        end_time = datetime.datetime.now()
+        tour = Tour(nom_tour, begin_time, end_time)
+        #print(nom_tour, begin_time, end_time)
+        return  pairs, tirages, tour
+        pass
 
     global pairs
-    pairs, tirages, tour = create_round(tours)
+    pairs, tirages, tour = create_round(rangs, tours)
     print(pairs)
     print(tirages)
     print (tour)
