@@ -34,15 +34,9 @@ class Creation:
             self.prompt_create_tournoi(self)
             return
         
-        #print(self.nom, self.lieu, self.date, self.description)
-        colect =  {'nom': self.nom, 'lieu': self.lieu, 'date': self.date, 'description': self.description}
+        tournoi = [self.nom, self.lieu, self.date, self.description]
         
-        #print(colect)
-        return colect
-
-    def show_tournoi(tournoi):
-        print(tournoi)
-        return
+        return tournoi
 
     def prompt_create_joueur(self):
         """demande la création des joueurs"""
@@ -80,10 +74,6 @@ class Creation:
         joueur =[self.nom, self.prenom, self.birth_date, self.genre, self.classement]
         #print(joueur)
         return joueur
-    
-    def show_joueurs(joueurs):
-        #print(joueurs)
-        return
 
     def prompt_create_cadence(self):
         """choix de la cadence des matchs"""

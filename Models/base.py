@@ -44,6 +44,34 @@ class List_joueur:
         """Used in print."""
         return str(self)
 
+class Ctrl_temps:
+    """bullet: 6mn / 2 joueurs, blitz: 10mn / 2 joueurs, coup rapide: 40mn / 2 joueurs"""
+    def __init__(self, bullet = False, blitz = False, coup_rapide = False):
+        self.bullet = bullet
+        self.blitz = blitz
+        self.coup_rapide = coup_rapide
+    
+    def __str__(self):
+        """Used in print."""
+        return f"{self.bullet}, {self.blitz}, {self.coup_rapide}"
+
+    def __repr__(self):
+        """Used in print."""
+        return str(self)
+
+class Classement:
+    """classement des joueurs par indice de la liste des joueurs"""
+    def __init__(self, rang):
+        self.rang = rang
+
+    def __str__(self):
+        """Used in print."""
+        return f"{self.rang}"
+
+    def __repr__(self):
+        """Used in print."""
+        return str(self)
+      
 class List_match:
     """liste des matchs de chaque tour"""
     def __init__(self, joueur_1, joueur_2):
@@ -75,49 +103,16 @@ class Tour:
     def __repr__(self):
         """Used in print."""
         return str(self)
-    
-class Ctrl_temps:
-    """bullet: 6mn / 2 joueurs, blitz: 10mn / 2 joueurs, coup rapide: 40mn / 2 joueurs"""
-    def __init__(self, bullet = False, blitz = False, coup_rapide = False):
-        self.bullet = bullet
-        self.blitz = blitz
-        self.coup_rapide = coup_rapide
-    
-    def __str__(self):
-        """Used in print."""
-        return f"{self.bullet}, {self.blitz}, {self.coup_rapide}"
-
-    def __repr__(self):
-        """Used in print."""
-        return str(self)
 
 class Tirage:
     """tirage au sort blanc ou noir"""
-    def __init__(self, joueur_1, joueur_2):
-        self.joueur_1 = joueur_1
-        self.joueur_2 = joueur_2
-
-    def random(blanc, noir):
-        self.blanc = blanc
-        self.noir = noir
-    
-    def __str__(self):
-        """Used in print."""
-        return f"{self.joueur_1}, {self.joueur_2}"
-
-    def __repr__(self):
-        """Used in print."""
-        return str(self)
-
-class Match:
-    """tournee par paires"""
-    def __init__(self, joueur_1, joueur_2):
-        self.joueur_1 = joueur_1
-        self.joueur_2 = joueur_2
+    def __init__(self, color_joueur_1, color_joueur_2):
+        self.color_joueur_1 = color_joueur_1
+        self.color_joueur_2 = color_joueur_2
 
     def __str__(self):
         """Used in print."""
-        return f"{self.joueur_1}, {self.joueur_2}"
+        return f"{self.color_joueur_1}, {self.color_joueur_2}"
 
     def __repr__(self):
         """Used in print."""
@@ -125,14 +120,14 @@ class Match:
 
 class Resultat:
     """resultat du tour"""
-    def __init__(self, parties, pts_joueur_1, pts_joueur_2):
+    def __init__(self, partie, pts_joueur_1, pts_joueur_2):
         self.pts_joueur_1 = pts_joueur_1
         self.pts_joueur_2 = pts_joueur_2
-        self.parties = parties
+        self.partie = partie
     
     def __str__(self):
         """Used in print."""
-        return f"{self.parties}, {self.pts_joueur_1}, {self.pts_joueur_2}"
+        return f"{self.partie}, {self.pts_joueur_1}, {self.pts_joueur_2}"
 
     def __repr__(self):
         """Used in print."""
@@ -140,10 +135,24 @@ class Resultat:
 
 class Tri:
     """tri des joueurs"""
+    def __init__(self, name, resultat):
+        self.name = name
+        self.resultat = resultat
+        
+    def __str__(self):
+        """Used in print."""
+        return f"{self.name}, {self.resultat}"
+
+    def __repr__(self):
+        """Used in print."""
+        return str(self)
+
+class Table_joueur:
+    """score par joueur"""
     def __init__(self, name, score):
         self.name = name
         self.score = score
-
+ 
     def __str__(self):
         """Used in print."""
         return f"{self.name}, {self.score}"
