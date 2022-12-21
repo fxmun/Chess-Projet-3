@@ -1,14 +1,15 @@
 class Tournoi:
     """modele de tournoi"""
-    def __init__(self, nom, lieu, date, description):
+    def __init__(self, nom, lieu, date_debut, date_fin, description):
         self.nom = nom
         self.lieu = lieu
-        self.date = date
+        self.date_debut = date_debut
+        self.date_fin = date_fin
         self.description = description
     
     def __str__(self):
         """Used in print."""
-        return f"{self.nom}, {self.lieu}, {self.date}, {self.description}"
+        return f"{self.nom}, {self.lieu}, {self.date_debut}, {self.date_fin}, {self.description}"
 
     def __repr__(self):
         """Used in print."""
@@ -16,7 +17,7 @@ class Tournoi:
 
 class Joueur:
     """Joueurs participant au tournoi"""
-    def __init__(self, nom, prenom, birth_date, genre, classement = 8):
+    def __init__(self, nom, prenom, birth_date, genre, classement):
         self.nom = nom
         self.prenom = prenom
         self.birth_date = birth_date

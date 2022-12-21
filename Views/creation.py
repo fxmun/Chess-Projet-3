@@ -22,8 +22,14 @@ class Creation:
             self.prompt_create_tournoi(self)
             return
         
-        self.date = input("entrez la date du tournoi : ")
-        if self.date == '':
+        self.date_debut = input("entrez la date de debut du tournoi : ")
+        if self.date_debut == '':
+            print('champ obligatoire')
+            self.prompt_create_tournoi(self)
+            return
+        
+        self.date_fin = input("entrez la date de fin du tournoi : ")
+        if self.date_fin == '':
             print('champ obligatoire')
             self.prompt_create_tournoi(self)
             return
@@ -34,7 +40,7 @@ class Creation:
             self.prompt_create_tournoi(self)
             return
         
-        tournoi = [self.nom, self.lieu, self.date, self.description]
+        tournoi = [self.nom, self.lieu, self.date_debut, self.date_fin, self.description]
         
         return tournoi
 
