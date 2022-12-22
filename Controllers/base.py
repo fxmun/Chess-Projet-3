@@ -1,5 +1,6 @@
 from typing import List
 import datetime
+from operator import itemgetter
 import random
 
 from Models.base import Tournoi
@@ -11,9 +12,8 @@ from Models.base import List_match
 from Models.base import Tirage
 from Models.base import Tour
 from Models.base import Resultat
-from Models.base import Tri
-from Views.creation import Creation
 from Models.base import Table_joueur
+from Views.creation import Creation
 
 class Initialise:
     """initialisation du tournoi"""
@@ -168,6 +168,7 @@ class Build:
     def create_round_1(tri_rangs):   
         liste = tri_rangs
         pairs = []
+        suite = []
         tirages = []
         while liste:
             if len(liste) == 8:
@@ -175,6 +176,8 @@ class Build:
                 j = liste[4]
                 pair = List_match(i, j)
                 pairs.append(pair)
+                suite.append(i)
+                suite.append(j)
                 liste.pop(0)
                 liste.pop(3)
                 
@@ -183,6 +186,8 @@ class Build:
                 j = liste[3]
                 pair = List_match(i, j)
                 pairs.append(pair)
+                suite.append(i)
+                suite.append(j)
                 liste.pop(0)
                 liste.pop(2)     
 
@@ -191,6 +196,8 @@ class Build:
                 j = liste[2]
                 pair = List_match(i, j)
                 pairs.append(pair)
+                suite.append(i)
+                suite.append(j)
                 liste.pop(0)
                 liste.pop(1)
 
@@ -199,6 +206,8 @@ class Build:
                 j = liste[1]
                 pair = List_match(i, j)
                 pairs.append(pair)
+                suite.append(i)
+                suite.append(j)
                 liste.pop(0)
                 liste.pop(0)
                 
@@ -224,19 +233,21 @@ class Build:
         end_time = datetime.datetime.now()
         tour = Tour(nom_tour, begin_time, end_time)
         #print(nom_tour, begin_time, end_time)
-        return  pairs, tirages, tour
+        return  pairs, suite, tirages, tour
 
     global pairs
-    pairs, tirages, tour = create_round_1(tri_rangs)
+    global suite
+    pairs, suite, tirages, tour = create_round_1(tri_rangs)
     print(pairs)
+    print(suite)
     print(tirages)
     print (tour)
 
 class Play:
     """jouer les rencontres"""
-    def __init__(self, pairs, score):
+    def __init__(self, pairs, suite):
         self.pairs = pairs
-        self.score = score
+        self.suite = suite
         
     def edit_resultat():
         """score aléatoire initié par la vue"""
@@ -273,130 +284,62 @@ class Play:
     resultats = create_resultat(score)
     print(resultats)
     
-    def create_classement_partie(pairs, score):
+    def create_classement_partie(suite, score):
         """creation du classement après le premier tour"""
         noms = []
         scores = []
-        for pair in pairs:
-            i = pairs.index(pair)
-            nom = pairs[i]
+        for one in suite:
+            i = suite.index(one)
+            nom = suite[i]
             noms.append(nom)
             #print(nom)
         
-        for un in score:
-            i = score.index(un)
+        for one in score:
+            i = score.index(one)
             point = score[i]
             scores.append(point)
-            #print(point)        
-        new_classement = Tri(noms, scores)
-        tri_joueurs = [x for _ , x in sorted(zip(str(scores),noms), reverse = True)]
-        return new_classement, tri_joueurs
-    new_classement, tri_joueurs = create_classement_partie(pairs, score)
-    print(tri_joueurs)
-    '''
-    def create_table_joueur(new_classement, pairs):
-        """creation en memoire d'un tableau du score de chaque joueur"""
-        noms = new_classement.name
-        scores = new_classement.resultat
-        print(noms)
-        print(scores)
-        nom = []
-        score = []
-        result = []
-        for h in scores:
-            y = scores.index(h)
-            if y == 0:
-                i = y
-                j = noms[y].joueur_1
-                k = scores[i]
-                nom.append(j)
-                score.append(k)
-                j = noms[y].joueur_2
-                i += 1
-                k = scores[i]
-                nom.append(j)
-                score.append(k)
-
-            elif y == 1:
-                i = y
-                j = noms[y].joueur_1
-                i += 1
-                k = scores[i]
-                nom.append(j)
-                score.append(k)
-                j = noms[y].joueur_2
-                i += 1
-                k = scores[i]
-                nom.append(j)
-                score.append(k)
-
-            elif y == 2:
-                i = y
-                j = noms[y].joueur_1
-                i += 2
-                k = scores[i]
-                nom.append(j)
-                score.append(k)
-                j = noms[y].joueur_2
-                i += 1
-                k = scores[i]
-                nom.append(j)
-                score.append(k)        
-
-            elif y == 3:
-                i = y
-                j = noms[y].joueur_1
-                i += 3
-                k = scores[i]
-                nom.append(j)
-                score.append(k)
-                j = noms[y].joueur_2
-                i += 1
-                k = scores[i]
-                nom.append(j)
-                score.append(k)
-
-            else:
-                break    
-   
-        tri_joueurs = [x for _ , x in sorted(zip(score,nom), reverse = True)]
-        print(nom)
-        print(score)
+            #print(point)
+        
+        tri_scores = sorted(range(len(scores)), key=lambda k: scores[k], reverse=True)
+        tri_joueurs = list(itemgetter(*tri_scores)(noms))
+        #new_classement = Tri(noms, scores)
+        #tri_joueurs = [x for _ , x in sorted(zip(scores,noms), reverse = True)]
+        #print(tri_joueurs)
         return tri_joueurs
+    global tri_joueurs
+    tri_joueurs = create_classement_partie(suite, score)
+    print(tri_joueurs)
     
-    tri_joueurs = create_table_joueur(new_classement, pairs)
-    print(tri_joueurs)'''
-
-    '''def create_table_joueur(new_classement, pairs):
+    def create_table_joueur(suite, score):
         """creation en memoire d'un tableau du score de chaque joueur"""
-        noms = new_classement.name
-        scores = new_classement.resultat
         table_joueurs = []
-        for unit in range(8):
-            #i = range(4).index(unit)
-            table_joueur = Table_joueur(noms, scores)
+        while len(suite): 
+            table_joueur = Table_joueur(suite[0], score[0])
             table_joueurs.append(table_joueur)
-            print(noms)
-            print(table_joueur)
+            suite = suite[1:]
+            score = score[1:]
+            #print(suite)
+            #print(score)
+            #print(table_joueur)
         return table_joueurs
-    table_joueurs = create_table_joueur(new_classement, pairs)
-    print(table_joueurs)'''
+    table_joueurs = create_table_joueur(suite, score)
+    print(table_joueurs)
 
 class Other_round:
     """établie les trois derniers tours"""
     def __init__(self):
         pass
 
-    def liste_matchs_effectues(pairs):
+    def liste_matchs_effectues(tri_joueurs):
         """incrémente les matchs effectués"""
         matchs_effectues = []
-        matchs_effectues.append(pairs)
+        matchs_effectues.append(tri_joueurs)
         #print(matchs_effectues)
         return matchs_effectues
 
-    matchs_effectues = liste_matchs_effectues(pairs)
+    matchs_effectues = liste_matchs_effectues(tri_joueurs)
     print(matchs_effectues)
 
     def create_other_pairs(matchs_effectues):
         """creation des trois derniers tours"""
-        #new_pairs = 
+        pass

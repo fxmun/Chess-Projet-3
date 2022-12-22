@@ -87,9 +87,23 @@ class List_match:
         """Used in print."""
         return str(self)
 
+class Tirage:
+    """tirage au sort blanc ou noir"""
+    def __init__(self, color_joueur_1, color_joueur_2):
+        self.color_joueur_1 = color_joueur_1
+        self.color_joueur_2 = color_joueur_2
+
+    def __str__(self):
+        """Used in print."""
+        return f"{self.color_joueur_1}, {self.color_joueur_2}"
+
+    def __repr__(self):
+        """Used in print."""
+        return str(self)
+
 class Tour:
     """tours du tournoi"""
-    def __init__(self, nom_tour, begin_time, end_time = "En cours ! "):
+    def __init__(self, nom_tour, begin_time, end_time):
         self.begin_time = begin_time
         self.end_time = end_time
         self.nom_tour = nom_tour
@@ -105,20 +119,6 @@ class Tour:
         """Used in print."""
         return str(self)
 
-class Tirage:
-    """tirage au sort blanc ou noir"""
-    def __init__(self, color_joueur_1, color_joueur_2):
-        self.color_joueur_1 = color_joueur_1
-        self.color_joueur_2 = color_joueur_2
-
-    def __str__(self):
-        """Used in print."""
-        return f"{self.color_joueur_1}, {self.color_joueur_2}"
-
-    def __repr__(self):
-        """Used in print."""
-        return str(self)
-
 class Resultat:
     """resultat du tour"""
     def __init__(self, partie, pts_joueur_1, pts_joueur_2):
@@ -129,20 +129,6 @@ class Resultat:
     def __str__(self):
         """Used in print."""
         return f"{self.partie}, {self.pts_joueur_1}, {self.pts_joueur_2}"
-
-    def __repr__(self):
-        """Used in print."""
-        return str(self)
-
-class Tri:
-    """tri des joueurs"""
-    def __init__(self, name, resultat):
-        self.name = name
-        self.resultat = resultat
-        
-    def __str__(self):
-        """Used in print."""
-        return f"{self.name}, {self.resultat}"
 
     def __repr__(self):
         """Used in print."""
