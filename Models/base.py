@@ -1,11 +1,13 @@
 class Tournoi:
     """modele de tournoi"""
     def __init__(self, nom, lieu, date_debut, date_fin, description):
+        """Les instances de round doivent être stockées dans une liste sur l'instance de tournoi à laquelle elles appartiennent"""
         self.nom = nom
         self.lieu = lieu
         self.date_debut = date_debut
         self.date_fin = date_fin
         self.description = description
+    """A la fin d'un tournoi, le responsable du tournoi met à jour manuellement le classement des joueurs"""    
     
     def __str__(self):
         """Used in print."""
@@ -62,7 +64,7 @@ class Ctrl_temps:
 
 class Classement:
     """classement des joueurs par indice de la liste des joueurs"""
-    def __init__(self, rang):
+    def __init__(self, rang = None):
         self.rang = rang
 
     def __str__(self):
@@ -72,6 +74,7 @@ class Classement:
     def __repr__(self):
         """Used in print."""
         return str(self)
+    """le gestionnaire devrait pouvoir modifier le classement d'un joueur à tout moment, et pas seulement après un tournoi"""
       
 class List_match:
     """liste des matchs de chaque tour"""
@@ -104,6 +107,7 @@ class Tirage:
 class Tour:
     """tours du tournoi"""
     def __init__(self, nom_tour, begin_time, end_time):
+        """ajouter la liste des correspondances en argument ?"""
         self.begin_time = begin_time
         self.end_time = end_time
         self.nom_tour = nom_tour
@@ -118,6 +122,7 @@ class Tour:
     def __repr__(self):
         """Used in print."""
         return str(self)
+    """Lorsqu'un tour est terminé, le gestionnaire du tournoi saisit les résultats de chaque match avant de générer les paires suivantes"""
 
 class Resultat:
     """resultat du tour"""
@@ -139,6 +144,12 @@ class Table_joueur:
     def __init__(self, name, score):
         self.name = name
         self.score = score
+        scores = []
+        scores.append(score)
+        total = (scores)
+        total = sum(scores)
+        self.total = total
+        return
  
     def __str__(self):
         """Used in print."""

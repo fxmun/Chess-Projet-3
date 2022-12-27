@@ -6,9 +6,9 @@ from Views.creation  import Creation
 import datetime
 
 def main():
-    view = Creation()
-    start = Initialise(view)
-    start.run()
+    #view = Creation()
+    #start = Initialise(view)
+    #start.run()
     return
 
 if __name__ == "__main__":

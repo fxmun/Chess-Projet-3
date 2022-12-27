@@ -17,19 +17,26 @@ from Views.creation import Creation
 
 class Initialise:
     """initialisation du tournoi"""
-    def __init__(self, view):
+    def __init__(self, round = 0):
         """a une vue"""
-        self.view = view
+        self.round = round
         return
 
+    def __str__(self):
+        """Used in print."""
+        return f"{self.round}"
+
+    def __repr__(self, round):
+        """Used in print."""
+        return str(self)
+    
     def run(self):
         """debute le tournoi."""
         return
     
     def edit_tournoi():
         """édition des caractéristiques du tournoi"""
-        view = Creation
-        tournoi = view.prompt_create_tournoi(view)
+        tournoi = Creation.prompt_create_tournoi(Creation)
         return tournoi
     
     tournoi = edit_tournoi()
@@ -41,14 +48,13 @@ class Initialise:
         return tournoi
     
     tournoi = create_tournoi(tournoi)
-    print(tournoi)
+    print('caracteristiques du tournoi: ' + str(tournoi))
     
     def edit_joueurs():
         """édition des joueurs par la vue"""
         joueurs = []
-        view = Creation()
         for one in range(8):
-            joueur = view.prompt_create_joueur()
+            joueur = Creation.prompt_create_joueur(Creation)
             joueurs.append(joueur)
         return joueurs
     
@@ -65,8 +71,8 @@ class Initialise:
         return joueurs    
     
     joueurs = create_joueurs(joueurs)
-    print(joueurs)
-
+    print('caracteristiques des joueurs: ' + str(joueurs))
+    '''
     def nom_par_classement():
         """restitue un classement initial par nom"""
         noms = []
@@ -84,6 +90,10 @@ class Initialise:
     global results
     results = nom_par_classement()
     print(results)
+    
+    def create_classements(results):
+        """création en mémoire du classement pa noms"""
+    '''
 
     def edit_list_joueurs():
         """edition de la liste des joueurs"""     
@@ -105,12 +115,11 @@ class Initialise:
         return list_joueur
     
     list_joueur = create_list_joueur(list_joueur)
-    print(list_joueur)           
+    print('liste des joueurs par leurs indices: ' + str(list_joueur))           
 
     def edit_cadence():
         """edition de la cadence des matchs par la vue"""
-        view = Creation()
-        cadence = view.prompt_create_cadence()
+        cadence = Creation.prompt_create_cadence(Creation)
         return cadence
     cadence = edit_cadence()
     #print(cadence)
@@ -118,16 +127,16 @@ class Initialise:
     def create_cadence(cadence):
         """creation en mémoire de la cadence"""
         if cadence =='1':
-            cadence = Ctrl_temps(True, False, False)
+            cadences = Ctrl_temps(True, False, False)
         elif cadence == '2':
-            cadence = Ctrl_temps(False, True, False)
+            cadences = Ctrl_temps(False, True, False)
         elif cadence == '3':
-            cadence = Ctrl_temps(False, False, True)
+            cadences = Ctrl_temps(False, False, True)
         else:
             pass
-        return cadence
-    cadence = create_cadence(cadence)
-    print(cadence)
+        return cadences
+    cadences = create_cadence(cadence)
+    print('cadence: ' + str(cadences))
     
 class Rank:
     """classement des joueurs"""
@@ -146,6 +155,7 @@ class Rank:
             gamers.append(gamer)
             rangs.append(rang)
         tri_rangs = [x for _ , x in sorted(zip(rangs,gamers), reverse = True)]
+        #print(tri_rangs)
         return tri_rangs
 
     global tri_rangs
@@ -158,14 +168,15 @@ class Rank:
         return obj_rangs
     
     obj_rangs = create_classement(tri_rangs)
-    print(obj_rangs)
+    print('rangs: ' + str(obj_rangs))
 
+round = Initialise()
 class Build:
     """constuit le tournoi"""
     def __init__(self):
         pass
     
-    def create_round_1(tri_rangs):   
+    def create_round(tri_rangs, round):   
         liste = tri_rangs
         pairs = []
         suite = []
@@ -227,8 +238,8 @@ class Build:
             
             #print(pairs)
             #print(tirages)
-                
-        nom_tour = "Round 0"
+
+        nom_tour = "Round " + str(round)
         begin_time = datetime.datetime.now()
         end_time = datetime.datetime.now()
         tour = Tour(nom_tour, begin_time, end_time)
@@ -237,11 +248,11 @@ class Build:
 
     global pairs
     global suite
-    pairs, suite, tirages, tour = create_round_1(tri_rangs)
-    print(pairs)
-    print(suite)
-    print(tirages)
-    print (tour)
+    pairs, suite, tirages, tour = create_round(tri_rangs, round)
+    print('paires: ' + str(pairs))
+    print('suite de joueurs appaires: ' + str(suite))
+    print('tirage au sort des couleurs: ' + str(tirages))
+    print ('definition du tour: ' + str(tour))
 
 class Play:
     """jouer les rencontres"""
@@ -271,7 +282,7 @@ class Play:
         
         return score
     score = edit_resultat()
-    print(score)
+    print('scores: ' + str(score))
 
     def create_resultat(score):
         """creation du resultat en memeoire"""
@@ -282,7 +293,7 @@ class Play:
             score = score[2:]
         return resultats
     resultats = create_resultat(score)
-    print(resultats)
+    print('resultats: ' + str(resultats))
     
     def create_classement_partie(suite, score):
         """creation du classement après le premier tour"""
@@ -308,7 +319,7 @@ class Play:
         return tri_joueurs
     global tri_joueurs
     tri_joueurs = create_classement_partie(suite, score)
-    print(tri_joueurs)
+    print('tri_joueurs: ' + str(tri_joueurs))
     
     def create_table_joueur(suite, score):
         """creation en memoire d'un tableau du score de chaque joueur"""
@@ -323,13 +334,21 @@ class Play:
             #print(table_joueur)
         return table_joueurs
     table_joueurs = create_table_joueur(suite, score)
-    print(table_joueurs)
+    print('table_joueurs: ' + str(table_joueurs))
 
 class Other_round:
     """établie les trois derniers tours"""
     def __init__(self):
         pass
 
+    def __str__(self):
+        """Used in print."""
+        return f"{self}"
+
+    def __repr__(self):
+        """Used in print."""
+        return str(self)
+    
     def liste_matchs_effectues(tri_joueurs):
         """incrémente les matchs effectués"""
         matchs_effectues = []
@@ -338,8 +357,66 @@ class Other_round:
         return matchs_effectues
 
     matchs_effectues = liste_matchs_effectues(tri_joueurs)
-    print(matchs_effectues)
+    print('matchs_effectues: ' + str(matchs_effectues))
 
-    def create_other_pairs(matchs_effectues):
+    def create_other_round(matchs_effectues, tri_joueurs, round):
         """creation des trois derniers tours"""
-        pass
+        rondes = []
+        rates = []
+        rangs = []
+        paires = []
+        suites = []
+        draws = []
+        tours = []
+        scores = []
+        results = []
+        for i in range(3):
+            j = range(3).index(i)
+            j += 1
+            round = j
+            tour = Initialise(j)
+            rondes.append(tour)
+            cadence = Initialise.edit_cadence()
+            cadences = Initialise.create_cadence(cadence)
+            rates.append(cadences)
+            rang = Rank.create_classement(tri_joueurs)
+            print(rang)
+            rangs.append(rang)
+            print(rangs) 
+            pairs, suite, tirages, tour = Build.create_round(tri_joueurs, round)
+            paires.append(pairs)
+            suites.append(suite)
+            draws.append(tirages)
+            tours.append(tour)
+            score = Play.edit_resultat()
+            scores.append(score)
+            resultats = Play.create_resultat(score)
+            results.append(resultats)
+            tri_joueurs = Play.create_classement_partie(suite, score)    
+            table_joueurs = Play.create_table_joueur(suite, score)
+
+            print(tour.nom_tour)
+            print(cadences)
+            print(rang)
+            print(rangs)
+            print(pairs)
+            print(suite)
+            print(tirages)
+            print(tour)
+            print(score)
+            print(resultats)
+            print(tri_joueurs)
+            print(table_joueurs)
+            
+            return rondes, rates, rangs, paires, suites, draws, tours, scores , results, tri_joueurs, table_joueurs
+    
+    rondes, rates, rangs, paires, suites, draws, tours, scores, results, tri_joueurs, table_joueurs = create_other_round(matchs_effectues, tri_joueurs, round)
+    #print(rondes)
+    #print(rates)
+    #print(rangs)
+    #print(paires)
+    #print(suites)
+    #print(draws)
+    #print(tours)
+    #print(scores)
+    #print(results)
