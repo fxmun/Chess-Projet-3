@@ -19,16 +19,17 @@ class Tournoi:
 
 class Joueur:
     """Joueurs participant au tournoi"""
-    def __init__(self, nom, prenom, birth_date, genre, classement):
+    def __init__(self, nom, prenom, birth_date, genre, classement, score=0):
         self.nom = nom
         self.prenom = prenom
         self.birth_date = birth_date
         self.genre = genre
         self.classement = classement
+        self.score = score
     
     def __str__(self):
         """Used in print."""
-        return f"{self.nom}, {self.prenom}, {self.birth_date}, {self.genre}, {self.classement}"
+        return f"{self.nom}, {self.prenom}, {self.birth_date}, {self.genre}, {self.classement}, {self.score}"
 
     def __repr__(self):
         """Used in print."""
@@ -144,16 +145,25 @@ class Table_joueur:
     def __init__(self, name, score):
         self.name = name
         self.score = score
-        scores = []
-        scores.append(score)
-        total = (scores)
-        total = sum(scores)
-        self.total = total
         return
  
     def __str__(self):
         """Used in print."""
         return f"{self.name}, {self.score}"
+
+    def __repr__(self):
+        """Used in print."""
+        return str(self)
+
+class Syntese:
+    """tableau total scores par joueur"""
+    def __init__(self, result):
+        self.result = result
+        return
+ 
+    def __str__(self):
+        """Used in print."""
+        return f"{self.result}"
 
     def __repr__(self):
         """Used in print."""

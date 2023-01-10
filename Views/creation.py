@@ -1,5 +1,4 @@
-"""vue d base"""
-
+"""vue de base"""
 
 class Creation:
     """cré le tournoi."""
@@ -43,6 +42,18 @@ class Creation:
         tournoi = [self.nom, self.lieu, self.date_debut, self.date_fin, self.description]
         
         return tournoi
+
+    def prompt_create_nombre_joueurs(self):
+        """définition du nombre de joueurs"""
+        try:
+            self.nombre = int(input("entrez un nombre paire superieur ou egal a 8 "))
+            if not int(self.nombre) or int(self.nombre) % 2 != 0 or int(self.nombre) < 8:
+                print("entrez un nombre paire supérieur ou égal a 8: ")
+                self.prompt_create_nombre_joueurs(self)
+        except:
+            print("ERREUR ! : entrez un nombre paire superieur ou egal a 8")
+            self.prompt_create_nombre_joueurs(self)
+        return self.nombre
 
     def prompt_create_joueur(self):
         """demande la création des joueurs"""

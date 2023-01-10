@@ -1,0 +1,3 @@
+pip install tinydb
+python -m pip install flake8
+pip install black
